@@ -17,7 +17,7 @@ const addComment = (postId, author, comment) => {
 const removeComment = (postId, index) => {
     return {
         type: "REMOVE_COMMENT",
-        i,
+        index,
         postId
     };
 }
