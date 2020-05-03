@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 
-import Photo from "./Photo";
-import Comments from "./Comments";
+import Photo from './Photo';
+import Comments from './Comments';
 
-export default class Single extends React.Component {
-    render() {
-        const { postId } = this.props.params;        
-        const index = this.props.posts.findIndex(post => post.code === postId);
-        const post = this.props.posts[index];
-        const postComments = this.props.comments[postId];
+const Single = (props) => {
+    const { postId } = props.params;        
+    const index = props.posts.findIndex((post) => post.id === postId);
+    const post = props.posts[index];
+    const postComments = props.comments[postId];
 
-        return (
-            <div className="single-photo">                
-                <Photo index={index} post={post} {...this.props}/>
-                <Comments postComments={postComments} {...this.props}/>
-            </div>
-        );
-    }
-}
+    return (
+        <div className='single-photo'>                
+            <Photo index={index} post={post} {...props}/>
+            <Comments postComments={postComments} {...props}/>
+        </div>
+    );
+};
+
+export default Single;

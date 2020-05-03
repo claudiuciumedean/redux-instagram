@@ -8,13 +8,12 @@ body
 .photo-grid
   display flex
   flex-wrap wrap
+  width:100%
   max-width 1200px
   margin 0 auto
 
 .grid-figure
   flex-basis calc(33.333% - 4rem)
-  flex-grow 1
-  flex-shrink 0
   margin 0 2rem 2rem 2rem
   padding 2rem
   border 1px solid lightgray
@@ -22,12 +21,23 @@ body
   box-shadow 0 0 0 5px rgba(0,0,0,0.03);
   position relative
 
+  @media (max-width: 768px)
+    flex-basis calc(50% - 4rem)
+
+  @media (max-width: 480px)
+    flex-basis calc(100% - 4rem)
+
 .single-photo
   @extend .grid-figure
   max-width 900px
-  margin 0 auto
+  margin 0 auto 25px
   display flex
   background white
+
+  @media (max-width: 768px)
+    flex-direction: column
+    justify-content: center
+
   .grid-figure
     box-shadow none
     margin 0 2rem 0 0
@@ -35,18 +45,39 @@ body
     padding 0
     flex 1 0 60%
     max-width 60%
+
+    @media (max-width: 768px)
+      flex 1 0 100%
+      max-width none
+      margin-right 0
+
   .comments
     flex 1 0 40%
     max-width 40%
+
+    @media (max-width: 768px)
+      flex 1 0 100%
+      max-width none
+      margin-right 0
+
   .grid-photo
     width 100%
     margin 0
 
 .grid-photo
-  width calc(100% + 4rem)
-  margin-left -2rem
-  margin-top -2rem
+  position relative
+  display block
+  width 100%
+  padding-top 100%
+  margin 0 auto
   max-width none
+
+  img
+    position absolute
+    top 0
+    left 0
+    width:100%
+    height:100%
 
 // Comments
 .remove-comment
@@ -70,7 +101,33 @@ body
     .remove-comment
       opacity 1
  
+.submit-button, .post-photo
+  display block
+  width 150px
+  border 1px solid #edeeed
+  border-radius: 30px
+  background-color: blue !important
+  color #fff
+
+.post-photo
+  position relative
+  left: 100%
+  transform: translateX(calc(-100% - 25px))
+  margin-top: 25px
+  text-align: center
+  text-decoration: none
+  padding 10px 15px
+  font-size 14px
+
+.uploaded-photo
+  display: block
+  margin: 25px auto
+
 .comment-form 
+  max-width: 500px
+  margin:0 auto
+  margin-top: 25px
+
   input, textarea
     width 100%
     border 0
@@ -78,8 +135,12 @@ body
     padding 1rem 0
     border-bottom 1px solid lightgrey
     outline none
-    resize vertical
+    resize none
+    background: transparent
 
+  .submit-button
+    width: 150px
+    margin: 20px auto 0
 
 .grid-photo-wrap
   position relative
@@ -95,6 +156,20 @@ body
   top 50%
   pointer-events none
   
+.spinner
+  position absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  &:after
+    content: ""
+    display: block
+    width: 50px
+    height: 50px
+    border 5px solid #f2f2f2
+    border-top-color:  blue
+    border-radius: 50%
+    animation spin .7s infinite linear
 
 /*  
   Buttons  
@@ -121,9 +196,8 @@ button, .button
     border-color blue
     outline 0
 
-/*
-  Cowboy style speech bubble - you should probably use an SVG for this if you are doing more icons.
-*/
+
+
 .speech-bubble
   size = 1.25rem
   width size * 1.2
@@ -132,6 +206,7 @@ button, .button
   display inline-block
   border-radius 50%
   position relative
+  margin-right 5px
   &:after
     display inline-block
     position absolute
